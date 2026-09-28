@@ -1,0 +1,109 @@
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+        #redbtn{
+             background: red;
+             border-radius: 50%;
+             width: 20px;
+             height: 20px;
+        }
+        #orangebtn{
+             background: orange;
+             border-radius: 50%;
+             width: 20px;
+             height: 20px;
+        }
+        #greenbtn{
+            background: green;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+        }
+        #bluebtn{
+            background: blue;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>My Paint App</h1>
+<button id="redbtn"></button>
+<button id="orangebtn"></button>
+<button id="greenbtn"></button>
+<button id="bluebtn"></button>
+<br />
+<input placeholder="Enter brush size" id="sizeInput">
+<br>
+    <canvas id="myCanvas" width="800" height="400"></canvas>
+</body>
+<script>
+    console.log("Hello");
+    //Grab the canvas and save it to a variable
+    let mycanvas = document.getElementById("myCanvas");
+    let brush = mycanvas.getContext("2d");
+    let isDrawing = false;
+    //Events
+    function triggerDown(info) {
+        isDrawing = true;
+        console.log(isDrawing);
+        console.log("Mouse is Down");
+        brush.moveTo(info.offsetX, info.offsetY);
+        brush.beginPath();
+    }
+    function triggerMove(info) {
+        console.log("Mouse is Moving");
+        if (isDrawing == true) {
+            brush.lineTo(info.offsetX, info.offsetY);
+            brush.stroke(); // shows the line
+        } 
+    }
+    function triggerUp(info) {
+        isDrawing = false;
+        console.log(isDrawing);
+    }
+    mycanvas.addEventListener("mousemove", triggerMove);
+    mycanvas.addEventListener("mousedown", triggerDown);
+    mycanvas.addEventListener("mouseup", triggerUp);
+
+    let redbtn = document.getElementById("redbtn");
+redbtn.addEventListener("click", triggerRed)
+
+function triggerRed()
+{
+    brush.strokeStyle="red"
+}
+let orangebtn = document.getElementById("orangebtn");
+orangebtn.addEventListener("click", triggerOrange)
+
+function triggerOrange()
+{
+    brush.strokeStyle="orange"
+}
+
+let greenbtn = document.getElementById("greenbtn");
+greenbtn.addEventListener("click", triggerGreen);
+
+function triggerGreen()
+{
+    brush.strokeStyle = "green";
+}
+
+let bluebtn = document.getElementById("bluebtn");
+bluebtn.addEventListener("click", triggerBlue);
+
+function triggerBlue()
+{
+    brush.strokeStyle = "blue";
+}
+let sizeInput = document.getElementById("sizeInput");
+sizeInput.addEventListener('input', triggerSize);
+function triggerSize()
+{
+    brush.lineWidth = sizeInput.value;
+}
+</script>
